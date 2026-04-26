@@ -1,0 +1,81 @@
+RPG Mission System
+
+
+Player Campos
+	id
+	username
+	email
+	password
+	role (USER / ADMIN)
+	createdAt
+	lastLogin
+	
+Character Campos
+	id
+	playerId (FK)
+	name
+	race
+	characterClass
+	level
+	experiencePoints
+	gold
+	isAlive
+	createdAt
+	
+	Relación
+		Character → Player (ManyToOne)
+	
+Mission Campos
+	id
+	title
+	description
+	minRequiredLevel
+	maxAcceptedLevel
+	experienceReward
+	goldReward
+	createdAt
+	
+QuestLog Campos
+	id
+	characterId (FK)
+	missionId (FK)
+	status (PENDING / IN_PROGRESS / COMPLETED / FAILED)
+	failed (Boolean default false)
+	startedAt
+	completedAt
+	
+	Relaciones
+		Character → QuestLog (1-N)
+		Mission → QuestLog (1-N)
+		
+Reward Campos
+id
+	missionId (FK)
+	type (GOLD / EXPERIENCE / ITEM)
+	amount
+	itemName (nullable)
+	description
+	sourceType (MISSION / ADMIN / EVENT)
+	createdAt
+	
+	Relación
+		Mission → Reward (1-N)
+		
+CharacterLevel Campos
+	id
+	characterId (FK) ✅ NUEVO
+	level
+	experiencePoints
+	
+	Relación
+		Character → CharacterLevel (1-1 o 1-N histórico si lo quieres escalar luego)
+
+
+MODELO RELACIONAL FINAL
+
+PLAYER
+ └── CHARACTER (1-N)
+        ├── CHARACTER_LEVEL (1-1 o histórico)
+        └── QUEST_LOG (1-N)
+               └── MISSION (N-1)
+                      └── REWARD (1-N)
