@@ -1,0 +1,26 @@
+MECÁNICAS
+
+1. Asignar misión
+	Validaciones:
+	personaje existe
+	misión existe
+	nivel dentro de rango
+	NO existe QuestLog previo
+	
+2. Iniciar misión
+	Solo si estado = PENDING
+	Cambiar la fecha de inicio
+
+3. Completar misión
+	Solo si IN_PROGRESS
+	Aplicar:
+	XP (Mission)
+	Gold (Mission)
+	
+	Cambiar la fecha de mision compltada
+	
+4. Fallar misión
+	status → FAILED
+	failed → true
+	IMPORTANTE: NO hay level up automático, esto deja el sistema abierto a:
+	reglas externas y distintos sistemas RPG y de roleo

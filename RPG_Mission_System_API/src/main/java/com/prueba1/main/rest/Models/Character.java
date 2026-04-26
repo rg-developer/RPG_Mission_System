@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -61,8 +60,4 @@ public class Character {
 	@OneToMany(mappedBy= "character", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List <QuestLog> questLogs;
-	
-	@OneToOne (mappedBy = "character", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private CharacterLevel characterLevel;
 }

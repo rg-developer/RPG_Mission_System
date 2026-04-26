@@ -58,4 +58,13 @@ public class Player {
 	public enum Role {
 		USER, ADMIN
 	}
+	
+	public Character getCharacterById(Long id) {
+		for (Character character: characters) {
+			if (character.getId() == id) {
+				return character;
+			}
+		}
+		return null;
+	}
 }

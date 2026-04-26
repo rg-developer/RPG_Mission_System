@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,8 +54,10 @@ public class Mission {
 	private LocalDate completedAt;
 	
 	@OneToMany(mappedBy= "mission", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List <QuestLog> questLogs;
 	
 	@OneToMany(mappedBy= "mission", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List <Reward> rewards;
 }
