@@ -10,33 +10,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prueba1.main.rest.Models.QuestLog;
+import com.prueba1.main.rest.Mappers.QuestLogMapper;
 import com.prueba1.main.rest.Services.QuestLogService;
 
 import DTOs.Character.AddCharacterToMissionDTO;
+import DTOs.Responses.DefaultQuestLogResponse;
 
 @RestController
 public class QuestLogController {
+
 	@Autowired
 	private QuestLogService service;
 
 	@PostMapping("quest-log/add-character-to-mission")
-	public ResponseEntity<QuestLog> addCharacterToMission(@RequestBody AddCharacterToMissionDTO params) {
-		return service.addCharacterToMission(params);
+	public ResponseEntity<DefaultQuestLogResponse> addCharacterToMission(@RequestBody AddCharacterToMissionDTO params) {
+		return ResponseEntity.ok(
+				QuestLogMapper.toResponse(service.addCharacterToMission(params))
+				);
 	}
-	
+
 	@PutMapping("quest-log/start-mission")
-	public ResponseEntity<List<QuestLog>> startMission(@RequestParam("missionId") Long missionId) {
-		return service.startMission(missionId);
+	public ResponseEntity<List<DefaultQuestLogResponse>> startMission(@RequestParam Long missionId) {
+		return ResponseEntity.ok(
+				QuestLogMapper.toResponseList(service.startMission(missionId))
+				);
 	}
-	
+
 	@PutMapping("quest-log/complete-mission")
-	public ResponseEntity<List<QuestLog>> completeMission(@RequestParam("missionId") Long missionId) {
-		return service.completeMission(missionId);
+	public ResponseEntity<List<DefaultQuestLogResponse>> completeMission(@RequestParam Long missionId) {
+		return ResponseEntity.ok(
+				QuestLogMapper.toResponseList(service.completeMission(missionId))
+				);
 	}
-	
+
 	@PutMapping("quest-log/end-mission")
-	public ResponseEntity<List<QuestLog>> failMission(@RequestParam("missionId") Long missionId) {
-		return service.failMission(missionId);
+	public ResponseEntity<List<DefaultQuestLogResponse>> failMission(@RequestParam Long missionId) {
+		return ResponseEntity.ok(
+				QuestLogMapper.toResponseList(service.failMission(missionId))
+				);
 	}
 }

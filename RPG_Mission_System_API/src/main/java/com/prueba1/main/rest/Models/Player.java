@@ -55,8 +55,10 @@ public class Player {
 	@JsonManagedReference
 	private List <Character> characters;
 	
+	
+	
 	public enum Role {
-		USER, ADMIN
+		ADMIN, USER
 	}
 	
 	public Character getCharacterById(Long id) {
@@ -67,4 +69,18 @@ public class Player {
 		}
 		return null;
 	}
+
+	public Player(String usurname, String email, String password, Role role, LocalDate createdAt, LocalDate lastLoguin,
+			List<Character> characters) {
+		super();
+		this.usurname = usurname;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.createdAt = createdAt;
+		this.lastLoguin = lastLoguin;
+		this.characters = characters;
+	}
+	
+	
 }

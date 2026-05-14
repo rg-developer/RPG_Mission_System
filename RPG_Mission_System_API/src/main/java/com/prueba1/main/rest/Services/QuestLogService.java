@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.prueba1.main.rest.Models.Mission;
@@ -17,6 +16,9 @@ import com.prueba1.main.rest.Repos.PlayerRepository;
 import com.prueba1.main.rest.Repos.QuestLogRepository;
 
 import DTOs.Character.AddCharacterToMissionDTO;
+import Exceptions.InvalidMissionException;
+import Exceptions.InvalidRewardException;
+import Exceptions.ResourceNotFoundException;
 
 @Service
 public class QuestLogService {
@@ -33,131 +35,98 @@ public class QuestLogService {
 	@Autowired
 	private CharacterService characterService;
 
-	public ResponseEntity<QuestLog> addCharacterToMission(AddCharacterToMissionDTO params) {
+	public QuestLog addCharacterToMission(AddCharacterToMissionDTO params) {
+
 		Player characterPlayer = playerRepository.getById(params.getPlayerId());
 		if(characterPlayer.getId() == null) {
-			return ResponseEntity.noContent().build(); 
+			throw new ResourceNotFoundException("Player not found");
 		}
 		
-		Character characterFounded =  characterPlayer.getCharacterById(params.getCharacterId());
+		Character characterFounded = characterPlayer.getCharacterById(params.getCharacterId());
 		if(characterFounded == null) {
-			return ResponseEntity.noContent().build();
+			throw new ResourceNotFoundException("Character not found");
 		}
 		
 		Mission mission = missionRepository.getById(params.getMissionId());
 		if(mission == null) {
-			return ResponseEntity.noContent().build();
+			throw new ResourceNotFoundException("Mission not found");
 		}
 		
-		if(mission.getMinRequiredLevel() > characterFounded.getLevel() || mission.getMaxRequiredLevel() < characterFounded.getLevel() ) {
-			return ResponseEntity.badRequest().build();
+		if(mission.getMinRequiredLevel() > characterFounded.getLevel() || 
+		   mission.getMaxRequiredLevel() < characterFounded.getLevel()) {
+			throw new InvalidMissionException("Character level not valid for this mission");
 		}
 		
 		List<QuestLog> questLogs = questLogRepository.getByMissionId(params.getMissionId());
 		if (questLogs == null) {
-			return ResponseEntity.badRequest().build();
+			throw new InvalidMissionException("No quest logs found");
 		}
 		
 		QuestLog newQuestLog = new QuestLog(null, characterFounded, mission, Status.PENDING, false, null, null);
-		QuestLog questLogAdded = questLogRepository.save(newQuestLog);
 		
-		if(questLogAdded == null) {
-			return ResponseEntity.internalServerError().build();
+		return questLogRepository.save(newQuestLog);
+	}
+
+	public List<QuestLog> startMission(Long missionId) {
+		List<QuestLog> questLogs = updateQuestLogsStatesOfMission(missionId, Status.IN_PROGRES);
+		changeStartedMissionDate(questLogs);
+		return questLogs;
+	}
+
+	public List<QuestLog> completeMission(Long missionId) {
+
+		List<QuestLog> questLogs = updateQuestLogsStatesOfMission(missionId, Status.COMPLETED);
+		changeCompletedMissionDate(questLogs);
+		
+		List<Character> charactersUpdated = characterService.addDefaultRewardsForCharacters(questLogs);
+		
+		if (charactersUpdated.size() != questLogs.size()) {
+			throw new InvalidRewardException("Not all characters recived the reward");
 		}
 		
-		return ResponseEntity.ok(questLogAdded);
+		return questLogs;
 	}
-	public ResponseEntity<List<QuestLog>> startMission(Long missionId) {
-		ResponseEntity<List<QuestLog>> questLogsResponse = updateQuestLogsStatesOfMission(missionId, Status.IN_PROGRES);
-		
-		if (!questLogsResponse.equals(ResponseEntity.ok(questLogsResponse.getBody()))){
-			return questLogsResponse;
-		}
-		
-		List<QuestLog> questLogs = questLogsResponse.getBody();
-		changeStartedMissionDate (questLogs);
-		
-		return questLogsResponse;
-	}
-	public ResponseEntity<List<QuestLog>> completeMission(Long missionId) {
-			ResponseEntity<List<QuestLog>> questLogsResponse = updateQuestLogsStatesOfMission(missionId, Status.COMPLETED);
-			
-			if (!questLogsResponse.equals(ResponseEntity.ok(questLogsResponse.getBody()))){
-				return questLogsResponse;
-			}
-			
-			List<QuestLog> questLogs = questLogsResponse.getBody();
-			changeCompletedMissionDate (questLogs);
-			
-			List <Character> charactersUpdated = characterService.addDefaultRewardsForCharacters(questLogs);
-			if (charactersUpdated.size() != questLogs.size()) {
-				return ResponseEntity.internalServerError().build();
-			}
-			
-			return ResponseEntity.ok(questLogs); 
-	}
-	
-	public ResponseEntity<List<QuestLog>> failMission(Long missionId) {
-		ResponseEntity<List<QuestLog>> questLogsResponse = updateQuestLogsStatesOfMission(missionId, Status.FAILED);
-		
-		if (!questLogsResponse.equals(ResponseEntity.ok(questLogsResponse.getBody()))){
-			return questLogsResponse;
-		}
-		
-		List<QuestLog> questLogs = questLogsResponse.getBody();
-		int countSavedLogs = 0;
+
+	public List<QuestLog> failMission(Long missionId) {
+		List<QuestLog> questLogs = updateQuestLogsStatesOfMission(missionId, Status.FAILED);
 		
 		for (QuestLog questLog : questLogs) {
 			questLog.setFailed(true);
-			QuestLog savedLog = questLogRepository.save(questLog);
-			
-			if(savedLog != null) {
-				countSavedLogs++;
-			}
+			questLogRepository.save(questLog);
 		}
 		
-		if(!(countSavedLogs == questLogs.size())) {
-			return ResponseEntity.internalServerError().build();
-		}
-	
-		return ResponseEntity.ok(questLogs);
+		return questLogs;
 	}
-	
-	private ResponseEntity<List<QuestLog>> updateQuestLogsStatesOfMission(Long missionId, Status status) {
+
+	private List<QuestLog> updateQuestLogsStatesOfMission(Long missionId, Status status) {
 		List<QuestLog> questLogs = questLogRepository.getByMissionId(missionId);
 		if (questLogs == null) {
-			return ResponseEntity.noContent().build();
+			throw new RuntimeException("No quest logs found");
 		}
 		
-		for(int i = 0; i < questLogs.size(); i++) {
-			if(questLogs.get(i).getStatus() == Status.PENDING && !(status == Status.IN_PROGRES)) {
-				return ResponseEntity.badRequest().build();
+		for (QuestLog ql : questLogs) {
+			if(ql.getStatus() == Status.PENDING && status != Status.IN_PROGRES) {
+				throw new InvalidMissionException("The state must be on PENDING to put it IN_PROGRES");
 			}
-			if(questLogs.get(i).getStatus().equals(Status.IN_PROGRES) && (!(status == Status.COMPLETED) && !(status == Status.FAILED))) {
-				return ResponseEntity.badRequest().build();
+			if(ql.getStatus() == Status.IN_PROGRES && 
+			   (status != Status.COMPLETED && status != Status.FAILED)) {
+				throw new InvalidMissionException("The state must be on IN_PROGRES to put it in COMPLETED or FAILED");
 			}
 			
-			questLogs.get(i).setStatus(status);
+			ql.setStatus(status);
 		}
 		
-		List <QuestLog> updatedQuestLogs = questLogRepository.saveAll(questLogs);
-		
-		if(updatedQuestLogs == null) {
-			return ResponseEntity.internalServerError().build();
-		}
-		
-		return ResponseEntity.ok(updatedQuestLogs);
-		
+		return questLogRepository.saveAll(questLogs);
 	}
-	
-	private void changeStartedMissionDate (List <QuestLog >questLogs) {
+
+	private void changeStartedMissionDate(List<QuestLog> questLogs) {
 		for (QuestLog questLog : questLogs) {
 			questLog.setStartedAt(LocalDate.now());
 			questLogRepository.save(questLog);
 		}
 	}
-	
-	private void changeCompletedMissionDate (List <QuestLog >questLogs) {
+
+	private void changeCompletedMissionDate(List<QuestLog> questLogs) {
 		for (QuestLog questLog : questLogs) {
 			questLog.setCompletedAt(LocalDate.now());
 			questLogRepository.save(questLog);
