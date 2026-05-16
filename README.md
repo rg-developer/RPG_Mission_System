@@ -124,6 +124,9 @@ mvn clean install
 mvn spring-boot:run
 
 ---
+### 4. Run Swagger Documentation
+
+In explorer: http://localhost:8080/swagger-ui/index.html
 
 ## Security
 

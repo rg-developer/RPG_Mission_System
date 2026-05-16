@@ -26,6 +26,11 @@ public class SecurityConfig{
         return http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers(
+                	    "/v3/api-docs/**",
+                	    "/swagger-ui/**",
+                	    "/swagger-ui.html"
+                	).permitAll()
                 .antMatchers("/admins/set-player-role").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

@@ -10,7 +10,7 @@ import com.prueba1.main.rest.Models.Player;
 import com.prueba1.main.rest.Models.Player.Role;
 import com.prueba1.main.rest.Repos.PlayerRepository;
 
-import DTOs.Responses.SetPlayerRoleDto;
+import DTOs.Responses.UpdatePlayerRoleDto;
 import Exceptions.ResourceNotFoundException;
 
 @Service
@@ -37,14 +37,14 @@ public class PlayerService {
 		return true;
 	}
 	
-	public boolean setPlayerRole (SetPlayerRoleDto setPlayerRoleDto) {
-		Player player = playerRepository.getById(setPlayerRoleDto.getPlayerId());
+	public boolean setPlayerRole (UpdatePlayerRoleDto updatePlayerRoleDto) {
+		Player player = playerRepository.getById(updatePlayerRoleDto.getPlayerId());
 		
 		if (player == null) {
 			throw new ResourceNotFoundException("Player not found");
 		}
 		
-		if (setPlayerRoleDto.getRole().equals("ADMIN")) {
+		if (updatePlayerRoleDto.getRole().equals("ADMIN")) {
 			player.setRole(Role.ADMIN);
 			playerRepository.save(player);
 			return true;

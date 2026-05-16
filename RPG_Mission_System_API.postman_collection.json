@@ -1,0 +1,483 @@
+{
+  "info": {
+    "_postman_id": "8b64f8f1-b0ce-42cb-a447-69cb64db9d0d",
+    "name": "RPG_Mission_System_API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19946931"
+  },
+  "item": [
+    {
+      "name": "Missions",
+      "item": [
+        {
+          "name": "getById",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "127.0.0.1:8080/mission/get-by-id/?missionId=2",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "mission",
+                "get-by-id",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "missionId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "QuestsLog",
+      "item": [
+        {
+          "name": "AddCharacterToMission",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"playerId\": 1,\r\n  \"missionId\": 2,\r\n  \"characterId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/quest-log/add-character-to-mission",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "quest-log",
+                "add-character-to-mission"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "StartMission",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/quest-log/start-mission/?missionId=1",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "quest-log",
+                "start-mission",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "missionId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CompleteMission",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"missionId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/quest-log/complete-mission/?missionId=1",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "quest-log",
+                "complete-mission",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "missionId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EndMission",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"missionId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/quest-log/end-mission/?missionId=1",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "quest-log",
+                "end-mission",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "missionId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Players",
+      "item": [
+        {
+          "name": "getAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGRAZ21haWwuY29tIiwiaWF0IjoxNzc4NzkxMjkyLCJleHAiOjE3Nzg4Nzc2OTJ9.vYEmZSeNwm70qQkFlBoswhepmCl9kGVewGpwymMq7xY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/players/getAll",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "players",
+                "getAll"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Jwt",
+      "item": [
+        {
+          "name": "Auth Loguin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGRAZ21haWwuY29tIiwiaWF0IjoxNzc4NzkzOTA5LCJleHAiOjE3Nzg4ODAzMDl9.HD84Ksf88Y_Pty4-JGIE_316zTjWegMd6OwPVhSZwSE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"aaa@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/auth/login",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Auth Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"usurname\": \"manolin\",\r\n  \"email\": \"eee@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/auth/register",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admins",
+      "item": [
+        {
+          "name": "setPlayerRole",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWFAZ21haWwuY29tIiwiaWF0IjoxNzc4Nzk0MTQwLCJleHAiOjE3Nzg4ODA1NDB9.DfDIAy4wwcWrH0sEDkFZ-gVOjHKNqYaT6ZiORaLBmmk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "name",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "password",
+                "value": "paco",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"playerId\": \"5\",\r\n  \"role\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "127.0.0.1:8080/admin/set-player-role",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "set-player-role"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

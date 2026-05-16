@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SetPlayerRoleDto {
+public class UpdatePlayerRoleDto {
 	private Long playerId;
 	private String role;
 }
