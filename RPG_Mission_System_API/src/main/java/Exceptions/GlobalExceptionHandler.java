@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
-                "Resource Not Found",
+                GlobalExceptionDefaultMessages.RESOURCE_NOT_FOUND,
                 ex.getMessage()
         );
 
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Invalid Mission",
+                GlobalExceptionDefaultMessages.INVALID_MISSION,
                 ex.getMessage()
         );
 
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Invalid State",
+                GlobalExceptionDefaultMessages.INVALID_STATE,
                 ex.getMessage()
         );
 
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Invalid Reward",
+                GlobalExceptionDefaultMessages.INVALID_REWARD,
                 ex.getMessage()
         );
 
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Duplicated Email",
+                GlobalExceptionDefaultMessages.DUPLICATED_EMAIL,
                 ex.getMessage()
         );
 
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Internal Server Error",
+                GlobalExceptionDefaultMessages.INTERNAL_SERVER_ERROR,
                 ex.getMessage()
         );
 

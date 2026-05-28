@@ -20,6 +20,7 @@ public class CharacterService {
 	public List<Character> addDefaultRewardsForCharacters (List<QuestLog> questLogs) {
 		
 		List<Character> charactersUpdated = new ArrayList<>();
+		
 		for (QuestLog questLog : questLogs) {
 			Mission questMission = questLog.getMission();
 			Character character = questLog.getCharacter();

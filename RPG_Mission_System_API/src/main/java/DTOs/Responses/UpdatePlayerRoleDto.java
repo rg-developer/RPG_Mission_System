@@ -1,5 +1,7 @@
 package DTOs.Responses;
 
+import com.prueba1.main.rest.Models.Player.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UpdatePlayerRoleDto {
 	private Long playerId;
-	private String role;
+	private Role role;
 }

@@ -1,50 +1,43 @@
 package com.prueba1.main.rest.Services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.prueba1.main.rest.Models.Player;
 import com.prueba1.main.rest.Models.Player.Role;
 import com.prueba1.main.rest.Repos.PlayerRepository;
+import com.prueba1.main.rest.Validations.ActionResult;
+import com.prueba1.main.rest.Validations.ValidationServices.PlayerValidationService;
 
 import DTOs.Responses.UpdatePlayerRoleDto;
 import Exceptions.ResourceNotFoundException;
 
 @Service
-public class PlayerService {
+public class PlayerService{
 
 	@Autowired
 	private PlayerRepository playerRepository;
-
-	public ResponseEntity<List<Player>> getAll() {
-		List<Player> result = playerRepository.getAll();
-		if (result.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		
-		return ResponseEntity.ok(result);
+	
+	@Autowired
+	private PlayerValidationService playerValidationService;
+	
+	public Player getByEmail (String email) {
+		return playerRepository.getByEmail(email);
 	}
 	
-	
 	public boolean emailExists (String email) {
-		Player player = playerRepository.getByEmail(email);
-		if (player == null) {
-			return false;
-		}
-		return true;
+		ActionResult result = playerValidationService.playerExistsValidation(email);
+		return !result.isExistError();
 	}
 	
 	public boolean setPlayerRole (UpdatePlayerRoleDto updatePlayerRoleDto) {
 		Player player = playerRepository.getById(updatePlayerRoleDto.getPlayerId());
-		
-		if (player == null) {
-			throw new ResourceNotFoundException("Player not found");
+		ActionResult result = playerValidationService.playerIsNullValidation(player);
+		if (result.isExistError()) {
+			throw new ResourceNotFoundException(result.getCompleteErrorMessages());
 		}
 		
-		if (updatePlayerRoleDto.getRole().equals("ADMIN")) {
+		if (updatePlayerRoleDto.getRole() == Role.ADMIN) {
 			player.setRole(Role.ADMIN);
 			playerRepository.save(player);
 			return true;
@@ -53,6 +46,5 @@ public class PlayerService {
 		player.setRole(Role.USER);
 		playerRepository.save(player);
 		return true;
-		
 	}
 }

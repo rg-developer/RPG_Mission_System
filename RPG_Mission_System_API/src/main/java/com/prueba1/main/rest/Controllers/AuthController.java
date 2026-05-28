@@ -26,7 +26,7 @@ public class AuthController {
 	@ApiResponse(responseCode = "401", description = "Invalid credentials")
 	@PostMapping("auth/login")
 	public ResponseEntity<String> loguin(@RequestBody LoginDto loginDto) {
-		return ResponseEntity.ok(authService.loguin(loginDto));
+		return ResponseEntity.ok(authService.login(loginDto));
 	}
 
 	@Operation(summary = "User registration", description = "Creates a new user account in the system")

@@ -35,7 +35,7 @@ public class Player {
 	private Long id;
 	
 	@Column (nullable = false, unique = true)
-	private String usurname;
+	private String username;
 	
 	@Column (nullable = false, unique = true)
 	private String email;
@@ -48,8 +48,8 @@ public class Player {
 	@JoinColumn (name = "created_at")
 	private LocalDate createdAt;
 	
-	@JoinColumn (name = "last_loguin")
-	private LocalDate lastLoguin;
+	@JoinColumn (name = "last_login")
+	private LocalDate lastLogin;
 	
 	@OneToMany(mappedBy= "player", cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -70,15 +70,15 @@ public class Player {
 		return null;
 	}
 
-	public Player(String usurname, String email, String password, Role role, LocalDate createdAt, LocalDate lastLoguin,
+	public Player(String username, String email, String password, Role role, LocalDate createdAt, LocalDate lastLogin,
 			List<Character> characters) {
 		super();
-		this.usurname = usurname;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.role = role;
 		this.createdAt = createdAt;
-		this.lastLoguin = lastLoguin;
+		this.lastLogin = lastLogin;
 		this.characters = characters;
 	}
 	

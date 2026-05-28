@@ -12,6 +12,8 @@ import com.prueba1.main.rest.Models.Player;
 import com.prueba1.main.rest.Models.Player.Role;
 import com.prueba1.main.rest.Repos.PlayerRepository;
 import com.prueba1.main.rest.Security.JwtUtil;
+import com.prueba1.main.rest.Validations.ActionResult;
+import com.prueba1.main.rest.Validations.ValidationServices.AuthValidationService;
 
 import DTOs.Auth.LoginDto;
 import DTOs.Auth.RegisterDto;
@@ -27,33 +29,34 @@ public class AuthService {
 	private JwtUtil jwtUtil;
 	
 	@Autowired
-	private PlayerService playerSrevice;
-	
-	@Autowired
 	private PlayerRepository playerRepository;
 	
-	public String loguin (LoginDto loguinDto) {
+	@Autowired
+	private AuthValidationService authValidationService;
+	
+	public String login (LoginDto loginDto) {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(
-				loguinDto.getEmail(),
-				loguinDto.getPassword()
+				loginDto.getEmail(),
+				loginDto.getPassword()
 				));
 		
-		String token = jwtUtil.generateToken(loguinDto.getEmail());
+		String token = jwtUtil.generateToken(loginDto.getEmail());
 		// Update LastLoguin Date
 		
 		return token;
 	}
 	
 	public String register (RegisterDto registerDto) {
-		boolean emailExists = playerSrevice.emailExists(registerDto.getEmail());
-		if (emailExists) {
-			throw new DuplicatedEmailException("This email has already been registered");
+		ActionResult emailExistsValidation = authValidationService.emailExistsValidation(registerDto.getEmail());
+		
+		if (emailExistsValidation.isExistError()) {
+			throw new DuplicatedEmailException(emailExistsValidation.getCompleteErrorMessages());
 		}
 		
 		
 		String passwordEncoded = new BCryptPasswordEncoder().encode(registerDto.getPassword());
 		Player newPlayer = new Player(
-				registerDto.getUsurname(),
+				registerDto.getUsername(),
 				registerDto.getEmail(),
 				passwordEncoded,
 				Role.USER,

@@ -1,9 +1,5 @@
 package DTOs.Auth;
 
-import java.time.LocalDate;
-
-import com.prueba1.main.rest.Models.Player.Role;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RegisterDto {
 
-	private String usurname;
+	private String username;
 	private String email;
 	private String password;
 }
