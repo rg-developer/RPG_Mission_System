@@ -1,4 +1,4 @@
-package DTOs.Responses;
+package com.prueba1.main.rest.DTOs.Responses;
 
 import java.time.LocalDate;
 import com.prueba1.main.rest.Models.Status;

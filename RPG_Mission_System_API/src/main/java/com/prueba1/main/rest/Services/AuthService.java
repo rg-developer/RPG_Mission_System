@@ -8,16 +8,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.prueba1.main.rest.DTOs.Auth.LoginDto;
+import com.prueba1.main.rest.DTOs.Auth.RegisterDto;
+import com.prueba1.main.rest.Exceptions.DuplicatedEmailException;
 import com.prueba1.main.rest.Models.Player;
 import com.prueba1.main.rest.Models.Player.Role;
 import com.prueba1.main.rest.Repos.PlayerRepository;
 import com.prueba1.main.rest.Security.JwtUtil;
 import com.prueba1.main.rest.Validations.ActionResult;
 import com.prueba1.main.rest.Validations.ValidationServices.AuthValidationService;
-
-import DTOs.Auth.LoginDto;
-import DTOs.Auth.RegisterDto;
-import Exceptions.DuplicatedEmailException;
 
 @Service
 public class AuthService {

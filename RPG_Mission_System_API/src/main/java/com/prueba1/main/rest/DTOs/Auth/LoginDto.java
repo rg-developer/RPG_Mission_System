@@ -1,4 +1,4 @@
-package DTOs.Auth;
+package com.prueba1.main.rest.DTOs.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RegisterDto {
+public class LoginDto {
 
-	private String username;
 	private String email;
 	private String password;
 }

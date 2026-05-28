@@ -1,4 +1,4 @@
-package Exceptions;
+package com.prueba1.main.rest.Exceptions;
 
 import java.time.LocalDateTime;
 

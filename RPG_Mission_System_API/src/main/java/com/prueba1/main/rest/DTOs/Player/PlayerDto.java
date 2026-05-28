@@ -1,4 +1,4 @@
-package DTOs.Player;
+package com.prueba1.main.rest.DTOs.Player;
 
 import java.time.LocalDate;
 

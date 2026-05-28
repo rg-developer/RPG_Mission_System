@@ -1,4 +1,4 @@
-package Exceptions;
+package com.prueba1.main.rest.Exceptions;
 
 public class GlobalExceptionDefaultMessages {
 	protected static final String RESOURCE_NOT_FOUND = "Resource Not Found";

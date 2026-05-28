@@ -1,4 +1,4 @@
-package Exceptions;
+package com.prueba1.main.rest.Exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

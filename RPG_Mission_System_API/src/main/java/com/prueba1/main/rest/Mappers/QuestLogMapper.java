@@ -2,9 +2,8 @@ package com.prueba1.main.rest.Mappers;
 
 import java.util.List;
 
+import com.prueba1.main.rest.DTOs.Responses.DefaultQuestLogResponse;
 import com.prueba1.main.rest.Models.QuestLog;
-
-import DTOs.Responses.DefaultQuestLogResponse;
 
 public class QuestLogMapper {
 

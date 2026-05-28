@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.prueba1.main.rest.DTOs.Auth.LoginDto;
+import com.prueba1.main.rest.DTOs.Auth.RegisterDto;
 import com.prueba1.main.rest.Services.AuthService;
 
-import DTOs.Auth.LoginDto;
-import DTOs.Auth.RegisterDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

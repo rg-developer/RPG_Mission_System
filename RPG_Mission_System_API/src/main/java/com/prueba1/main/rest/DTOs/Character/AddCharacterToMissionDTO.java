@@ -1,6 +1,4 @@
-package DTOs.Responses;
-
-import com.prueba1.main.rest.Models.Player.Role;
+package com.prueba1.main.rest.DTOs.Character;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UpdatePlayerRoleDto {
+public class AddCharacterToMissionDTO {
 	private Long playerId;
-	private Role role;
+	private Long missionId;
+	private Long characterId;
 }

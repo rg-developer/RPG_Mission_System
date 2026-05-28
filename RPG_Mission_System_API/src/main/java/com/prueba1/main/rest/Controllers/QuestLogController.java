@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.prueba1.main.rest.DTOs.Character.AddCharacterToMissionDTO;
+import com.prueba1.main.rest.DTOs.Responses.DefaultQuestLogResponse;
 import com.prueba1.main.rest.Mappers.QuestLogMapper;
 import com.prueba1.main.rest.Services.QuestLogService;
 
-import DTOs.Character.AddCharacterToMissionDTO;
-import DTOs.Responses.DefaultQuestLogResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
